@@ -66,3 +66,41 @@ cd /usr/kafka/kafka; bin/kafka-topics.sh --list --zookeeper $ipkafka4ZK:2181
 ONION
 
 
+
+
+
+
+
+
+
+
+#========================= (CONSUMER和PRODUCER在不同網域下的連接的成功範例測試) =========================#
+#========================= (創建一個PRODUCER)
+# docker run -td --rm --name PRODUCER --hostname PRODUCER --network=kafka4onion oniontraveler/kafka_container:19.5.20
+
+
+#========================= (創建一個新網域HDSP4onion)
+# docker network create -d bridge HDSP4onion
+# docker network ls
+
+#========================= (創建一個CONSUMER)
+# docker run -td --rm --name CONSUMER --hostname CONSUMER --network=HDSP4onion oniontraveler/kafka_container:19.5.20
+# docker network connect kafka4onion CONSUMER
+
+# docker inspect --format "{{ .NetworkSettings.Networks.kafka4onion.IPAddress }}" CONSUMER
+# docker inspect --format "{{ .NetworkSettings.Networks.HDSP4onion.IPAddress }}" CONSUMER
+# docker inspect --format "{{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}" CONSUMER
+
+
+#========================= (啟動CONSUMER和PRODUCER進行測試)
+# docker exec -it PRODUCER /bin/bash
+# cd /usr/kafka/kafka; bin/kafka-console-producer.sh --broker-list $ipkafka4Br1:9092 --topic onionTopic1
+
+# docker exec -it CONSUMER /bin/bash
+# cd /usr/kafka/kafka; bin/kafka-console-consumer.sh --zookeeper ipkafka4ZK:2181 --topic onionTopic1
+
+
+#========================= (siao sheng miè ji)
+# docker stop PRODUCER CONSUMER
+# docker network rmHDSP4onion
+
