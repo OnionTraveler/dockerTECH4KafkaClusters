@@ -13,6 +13,7 @@ docker exec -i kafka4ZK /bin/bash << ONION
 cd /usr/kafka/kafka; bin/zookeeper-server-start.sh config/zookeeper.properties > /dev/null 2>&1 &
 ONION
 
+
 docker exec -i kafka4Br1 /bin/bash << ONION
 #========================= (更改Broker1的參數設定)
 sed -i "s/broker.id=0/broker.id=1/g" /usr/kafka/kafka/config/server.properties
@@ -23,6 +24,7 @@ sed -i "s/zookeeper.connect=localhost:2181/zookeeper.connect=$ipkafka4ZK:2181/g"
 cd /usr/kafka/kafka; bin/kafka-server-start.sh -daemon config/server.properties
 ONION
 
+
 docker exec -i kafka4Br2 /bin/bash << ONION
 #========================= (更改Broker2的參數設定)
 sed -i "s/broker.id=0/broker.id=2/g" /usr/kafka/kafka/config/server.properties
@@ -32,6 +34,7 @@ sed -i "s/zookeeper.connect=localhost:2181/zookeeper.connect=$ipkafka4ZK:2181/g"
 #========================= (啟動Broker2服務)
 cd /usr/kafka/kafka; bin/kafka-server-start.sh -daemon config/server.properties
 ONION
+
 
 docker exec -i kafka4Br3 /bin/bash << ONION
 #========================= (更改Broker3的參數設定)
@@ -45,15 +48,19 @@ ONION
 
 
 
+
+
 sleep 2
 #========================= (創建topic; 註: 不論在哪個叢集創建topic，只要是對同個zookeeper創建topic其效果都一樣，資料都是存在同個kafka叢集中)
 docker exec -i kafka4ZK /bin/bash << ONION
 cd /usr/kafka/kafka; bin/kafka-topics.sh --zookeeper $ipkafka4ZK:2181 --create --topic onionTopic1 --partitions 3 --replication-factor 3
 ONION
 
+
 docker exec -i kafka4Br1 /bin/bash << ONION
 cd /usr/kafka/kafka; bin/kafka-topics.sh --zookeeper $ipkafka4ZK:2181 --create --topic onionTopic2 --partitions 3 --replication-factor 3
 ONION
+
 
 docker exec -i kafka4Br2 /bin/bash << ONION
 cd /usr/kafka/kafka; bin/kafka-topics.sh --zookeeper $ipkafka4ZK:2181 --create --topic onionTopic3 --partitions 3 --replication-factor 3
