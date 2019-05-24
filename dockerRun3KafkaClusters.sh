@@ -20,3 +20,7 @@
 # docker exec -it kafka4Br3 /bin/bash
 
 
+#========================= (docker commands for remove all containers)
+# docker stop kafka4ZK kafka4Br1 kafka4Br2 kafka4Br3
+# docker rm kafka4ZK kafka4Br1 kafka4Br2 kafka4Br3
+
