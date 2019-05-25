@@ -50,7 +50,7 @@ ONION
 
 
 
-sleep 2
+sleep 5
 #========================= (創建topic; 註: 不論在哪個叢集創建topic，只要是對同個zookeeper創建topic其效果都一樣，資料都是存在同個kafka叢集中)
 docker exec -i kafka4ZK /bin/bash << ONION
 cd /usr/kafka/kafka; bin/kafka-topics.sh --zookeeper $ipkafka4ZK:2181 --create --topic onionTopic1 --partitions 3 --replication-factor 3
