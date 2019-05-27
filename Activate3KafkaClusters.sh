@@ -8,8 +8,8 @@ ipkafka4Br3=`docker inspect --format "{{range .NetworkSettings.Networks}}{{.IPAd
 
 
 
-#========================= (啟動Zookeeper服務)
 docker exec -i kafka4ZK /bin/bash << ONION
+#========================= (啟動Zookeeper服務)
 cd /usr/kafka/kafka; bin/zookeeper-server-start.sh config/zookeeper.properties > /dev/null 2>&1 &
 ONION
 
