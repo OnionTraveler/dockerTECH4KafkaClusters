@@ -108,6 +108,9 @@ ONION
 
 
 #========================= (siao sheng miè ji)
+#docker stop kafka4ZK kafka4Br1 kafka4Br2 kafka4Br3
+#docker rm kafka4ZK kafka4Br1 kafka4Br2 kafka4Br3
+
 # docker stop PRODUCER CONSUMER
-# docker network rmHDSP4onion
+# docker network rm HDSP4onion
 
