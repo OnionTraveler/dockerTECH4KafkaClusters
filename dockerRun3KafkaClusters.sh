@@ -4,7 +4,7 @@
  [ `docker network ls | grep 'kafka4onion' | cut -d ' ' -f 9` ] && echo "The network 「kafka4onion」 has existed！" || docker network create -d bridge kafka4onion
 
 
- [ `docker images | grep 'oniontraveler/kafka_container' | cut -d ' ' -f 1,4 --output-delimiter=':'` ] && echo "The image 「oniontraveler/kafka_container:19.5.20」 has existed！" || docker build -f ./myDockerfiles/onionfile -t oniontraveler/kafka_container:19.5.20 .
+ [ `docker images | grep 'oniontraveler/kafka_container' | cut -d ' ' -f 1,5 --output-delimiter=':'` ] && echo "The image 「oniontraveler/kafka_container:19.5.20」 has existed！" || docker build -f ./myDockerfiles/onionfile -t oniontraveler/kafka_container:19.5.20 .
 
  [ `docker ps -a | grep 'kafka4ZK' | rev | cut -d ' ' -f 1 | rev` ] && echo "The container 「kafka4ZK」 has existed" || docker run -itd --name kafka4ZK --hostname kafka4ZK --network=kafka4onion oniontraveler/kafka_container:19.5.20
  [ `docker ps -a | grep 'kafka4Br1' | rev | cut -d ' ' -f 1 | rev` ] && echo "The container 「kafka4Br1」 has existed" || docker run -id --name kafka4Br1 --hostname kafka4Br1 --network=kafka4onion oniontraveler/kafka_container:19.5.20
